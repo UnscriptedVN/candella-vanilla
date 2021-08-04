@@ -1,0 +1,21 @@
+name: Deploy CSS
+on: 
+  push:
+  schedule:
+    - cron: '0 0 * * 1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install
+      - run: npm upgrade vanilla-framework
+      - run: npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: vanilla-css
+          path: dist
